@@ -1,0 +1,46 @@
+<h1>Editar Sucursal</h1>
+<div class="container">
+  <div class="row">
+    <div class="row">
+      <form [formGroup]="form" (submit)="enviarFormulario()" class="text-align-center">
+        <mat-form-field  appearance="fill">
+          <mat-label>Nombre(s)</mat-label>
+          <input type="text" formControlName="nombre" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Calle</mat-label>
+          <input type="text" formControlName="calle" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Número Ext.</mat-label>
+          <input type="text" formControlName="numExt" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Número Int.</mat-label>
+          <input type="text" formControlName="numInt" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Colonia</mat-label>
+          <input type="text" formControlName="colonia" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>C.P.</mat-label>
+          <input type="text" formControlName="cp" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Teléfono</mat-label>
+          <input type="text" formControlName="telefono" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Gerente</mat-label>
+          <input type="text" formControlName="gerente" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Encargado</mat-label>
+          <input type="text" formControlName="encargado" matInput>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" >Enviar Información</button>
+      </form>
+    </div>
+  </div>
+</div>

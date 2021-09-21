@@ -1,0 +1,10 @@
+version: '2'
+services:
+  Formulario:
+    image: angular:11
+    working_dir: /app
+    ports:
+      - 4200:4200
+    volumes:
+      - ./:/app:delegated
+    command: ["ng","serve", "--host", "0.0.0.0"]

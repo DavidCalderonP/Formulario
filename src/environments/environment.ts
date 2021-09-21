@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API: {
+    sucursalesUrl: "http://10.112.32.145:8000/api/sucursales/"
+  }
 };
 
 /*
