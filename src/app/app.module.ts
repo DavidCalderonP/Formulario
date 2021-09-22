@@ -17,13 +17,22 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { SucursalDialogComponent } from './components/sucursal-dialog/sucursal-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { FormularioComponent } from './components/formulario/formulario.component';
+import { FormularioSucursalComponent } from './components/formulario-sucursal/formulario-sucursal.component';
+import { SucursalComponent } from './components/sucursal/sucursal.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatIconModule} from "@angular/material/icon";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
     AppComponent,
     SucursalDialogComponent,
-    FormularioComponent
+    FormularioSucursalComponent,
+    SucursalComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +49,12 @@ import { FormularioComponent } from './components/formulario/formulario.componen
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

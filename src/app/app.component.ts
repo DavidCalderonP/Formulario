@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import { Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {Sucursal} from "./models/sucursal";
 import {ApiService} from "./services/api.service";
 import {MatTabChangeEvent} from "@angular/material/tabs";
@@ -14,54 +13,28 @@ import {SucursalDialogComponent} from "./components/sucursal-dialog/sucursal-dia
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit{
-  title = 'Formulario';
-  //{"nombre":"Prueba","calle":"8 de enero","num_ext":"5","num_int":null,"colonia":"centro","cp":"80100","telefono":"6673425167","gerente":"luis","encargado":"josue"}
+export class AppComponent{
 
-  flag: boolean = false;
   displayedColumns: string[] = ['nombre', 'calle', 'num_ext', 'num_int', 'colonia', 'cp', 'telefono', 'gerente', 'encargado', "acciones"];
-
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() focusChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
-  //form: FormGroup;
   dataSource: MatTableDataSource<Sucursal>;
 
   constructor(private data: ApiService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource();
-/*
-    this.form = new FormGroup({
-      nombre: new FormControl(''),
-      calle: new FormControl(''),
-      numExt: new FormControl(''),
-      numInt: new FormControl(''),
-      colonia: new FormControl(''),
-      cp: new FormControl(''),
-      telefono: new FormControl(''),
-      gerente: new FormControl(''),
-      encargado: new FormControl('')
-    })
-*/
     this.sort = new MatSort();
-
-    console.log(this.sort)
-
-  }
-  ngAfterViewInit() {
     console.log(this.sort)
   }
 
   getSucursales(){
     this.data.getSucursales().subscribe(res=>{
-      this.flag = true;
-      // this.dataSource = new MatTableDataSource(res);
       this.dataSource.data = res;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       console.log(this.paginator)
       console.log(this.sort)
       console.log(this.dataSource)
-      console.log(this.flag)
     })
   }
 
@@ -94,4 +67,5 @@ export class AppComponent implements AfterViewInit{
       this.getSucursales();
     }
   }
+
 }
