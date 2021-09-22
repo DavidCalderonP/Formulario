@@ -4,7 +4,8 @@
       <mat-tab-group (focusChange)="myTabFocusChange($event)" style="align-self: center">
         <mat-tab label="Agregar Sucursales">
           <div class="form">
-            <form [formGroup]="form" (submit)="enviarFormulario()" class="text-align-center">
+            <app-formulario></app-formulario>
+            <!--<form [formGroup]="form" (submit)="enviarFormulario()" class="text-align-center">
               <mat-form-field  appearance="fill">
                 <mat-label>Nombre(s)</mat-label>
                 <input type="text" formControlName="nombre" matInput>
@@ -42,7 +43,7 @@
                 <input type="text" formControlName="encargado" matInput>
               </mat-form-field>
               <button type="submit" mat-raised-button color="primary" >Enviar Información</button>
-            </form>
+            </form>-->
           </div>
         </mat-tab>
 

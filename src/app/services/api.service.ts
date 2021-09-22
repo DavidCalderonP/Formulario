@@ -25,8 +25,8 @@ export class ApiService {
     return this.http.delete(`${environment.API.sucursalesUrl}${sucursal.id}`);
   }
 
-  updateSucursal(sucursal: Sucursal){
-    return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, sucursal)
+  updateSucursal(sucursal: Sucursal, newSucursal: Sucursal){
+    return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, newSucursal)
   }
 
 }

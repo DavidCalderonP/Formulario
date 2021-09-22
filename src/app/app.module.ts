@@ -17,11 +17,13 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { SucursalDialogComponent } from './components/sucursal-dialog/sucursal-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { FormularioComponent } from './components/formulario/formulario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SucursalDialogComponent
+    SucursalDialogComponent,
+    FormularioComponent
   ],
   imports: [
     BrowserModule,

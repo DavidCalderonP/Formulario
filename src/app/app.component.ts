@@ -6,7 +6,6 @@ import {MatTabChangeEvent} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
-import {catchError} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {SucursalDialogComponent} from "./components/sucursal-dialog/sucursal-dialog.component";
 
@@ -25,12 +24,12 @@ export class AppComponent implements AfterViewInit{
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Output() focusChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
-  form: FormGroup;
+  //form: FormGroup;
   dataSource: MatTableDataSource<Sucursal>;
 
   constructor(private data: ApiService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource();
-
+/*
     this.form = new FormGroup({
       nombre: new FormControl(''),
       calle: new FormControl(''),
@@ -42,7 +41,7 @@ export class AppComponent implements AfterViewInit{
       gerente: new FormControl(''),
       encargado: new FormControl('')
     })
-
+*/
     this.sort = new MatSort();
 
     console.log(this.sort)
@@ -50,27 +49,6 @@ export class AppComponent implements AfterViewInit{
   }
   ngAfterViewInit() {
     console.log(this.sort)
-  }
-  enviarFormulario(){
-    console.log(this.form)
-    let aux = this.form.value;
-    let sucursal: Sucursal;
-    sucursal = {
-      calle: aux['calle'],
-      colonia: aux['colonia'],
-      cp: aux['cp'],
-      encargado: aux['encargado'],
-      gerente: aux['gerente'],
-      nombre: aux['nombre'],
-      num_ext: aux['numExt'],
-      telefono: aux['telefono']
-    };
-    this.data.saveSucursal(sucursal).toPromise().then(res=>{
-      console.log(res)
-      this.form.reset();
-    }).catch(err=>{
-      console.log(err)
-    })
   }
 
   getSucursales(){
@@ -87,10 +65,6 @@ export class AppComponent implements AfterViewInit{
     })
   }
 
-  updateSucursal(element: Sucursal){
-    console.log(element.id)
-  }
-
   deleteSucursal(element: Sucursal){
     console.log(element.id)
     this.data.deleteSucursal(element).subscribe(res=>{
@@ -101,13 +75,17 @@ export class AppComponent implements AfterViewInit{
 
   openDialog(element: Sucursal): void {
     const dialogRef = this.dialog.open(SucursalDialogComponent, {
-      width: '250px',
+      minWidth: Math.round((screen.width/3))+'px',
+      minHeight: Math.round((screen.height/1.8))+'px',
       data: element
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.getSucursales();
     });
+
+    console.log('Width', Math.round((screen.width/3))+'px');
+    console.log('Height', Math.round((screen.height/1.8))+'px');
   }
 
   myTabFocusChange(event: MatTabChangeEvent){
