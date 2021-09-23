@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   API: {
-    sucursalesUrl: "http://10.112.32.145:8000/api/sucursales/"
+    sucursalesUrl: "http://10.112.32.145:8000/api/sucursales/",
+    usuariosUrl: "http://10.112.32.145:8000/api/users/"
   }
 };
 

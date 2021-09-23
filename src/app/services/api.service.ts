@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Sucursal} from "../models/sucursal";
 import {Observable} from "rxjs";
 import { environment } from "../../environments/environment";
+import {rendererTypeName} from "@angular/compiler";
+import {Usuario} from "../models/usuario";
 
 
 
@@ -27,6 +29,18 @@ export class ApiService {
 
   updateSucursal(sucursal: Sucursal, newSucursal: Sucursal){
     return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, newSucursal)
+  }
+
+  getUsuarios():Observable<any>{
+    return this.http.get(`${environment.API.usuariosUrl}`);
+  }
+
+  saveUsuario(usuario: Usuario): Observable<any>{
+    return this.http.post(environment.API.usuariosUrl, usuario);
+  }
+
+  updateUsuario(usuario: Usuario, newUsuario: Usuario){
+    return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`,newUsuario);
   }
 
 }

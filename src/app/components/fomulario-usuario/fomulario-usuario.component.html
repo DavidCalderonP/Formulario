@@ -1,0 +1,31 @@
+<form [formGroup]="form" (submit)="enviarFormulario()" class="text-align-center" style="display: grid" >
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre(s)</mat-label>
+    <input type="text" formControlName="nombre" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Apellido Paterno</mat-label>
+    <input type="text" formControlName="apellido_paterno" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Apellido Materno</mat-label>
+    <input type="text" formControlName="apellido_materno" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Teléfono</mat-label>
+    <input type="text" formControlName="telefono" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Sucursal</mat-label>
+    <input type="text" formControlName="sucursal_id" matInput>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input type="text" formControlName="email" matInput>
+  </mat-form-field>
+  <mat-form-field *ngIf="!dataUsuario" appearance="fill">
+    <mat-label>Contraseña</mat-label>
+    <input type="password" formControlName="password" matInput>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">Enviar Información</button>
+</form>

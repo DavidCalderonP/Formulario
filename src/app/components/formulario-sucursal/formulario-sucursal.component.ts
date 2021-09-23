@@ -4,6 +4,7 @@ import {Sucursal} from "../../models/sucursal";
 import {ApiService} from "../../services/api.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {SucursalDialogComponent} from "../sucursal-dialog/sucursal-dialog.component";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-formulario',
@@ -14,14 +15,13 @@ export class FormularioSucursalComponent implements OnInit {
 
   form: FormGroup;
   @Input() dialogRef: MatDialogRef<SucursalDialogComponent>;
-  @Input() dataSucursal: Sucursal;
+  @Input() dataSucursal: any;
 
-  constructor(private data: ApiService) {
-    //console.log("informacion pasada por template.", this.dataSucursal)
+  constructor(private data: ApiService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    //console.log("informacion pasada por template en el oninit.", this.dataSucursal)
+    this.route.url.subscribe(res=>console.log(res[0].path))
     this.form = new FormGroup({
       nombre: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['nombre'] || '' : ''),
       calle: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['calle'] || '' : ''),
@@ -54,7 +54,6 @@ export class FormularioSucursalComponent implements OnInit {
     };
 
     if(this.dataSucursal) {
-      //console.log("entro al true")
       this.data.updateSucursal(this.dataSucursal, newSucursal).toPromise().then(res => {
         console.log(res);
         this.dialogRef.close();
@@ -62,7 +61,6 @@ export class FormularioSucursalComponent implements OnInit {
         console.log(err)
       })
     } else {
-      //console.log("entro al false")
       this.data.saveSucursal(newSucursal).toPromise().then(res => {
         console.log(res)
         this.form.reset();

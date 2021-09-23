@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
@@ -25,6 +25,11 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatListModule} from "@angular/material/list";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { UsuarioDialogComponent } from './components/usuario-dialog/usuario-dialog.component';
+import { FomularioUsuarioComponent } from './components/fomulario-usuario/fomulario-usuario.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import {MatListModule} from "@angular/material/list";
     SucursalDialogComponent,
     FormularioSucursalComponent,
     SucursalComponent,
-    NavbarComponent
+    NavbarComponent,
+    UsuarioComponent,
+    UsuarioDialogComponent,
+    FomularioUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,10 @@ import {MatListModule} from "@angular/material/list";
     MatSidenavModule,
     MatIconModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatCheckboxModule,
+    FormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
