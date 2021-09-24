@@ -1,5 +1,5 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Sucursal} from "../../models/sucursal";
 import {ApiService} from "../../services/api.service";
 import {MatDialogRef} from "@angular/material/dialog";
@@ -17,21 +17,21 @@ export class FormularioSucursalComponent implements OnInit {
   @Input() dialogRef: MatDialogRef<SucursalDialogComponent>;
   @Input() dataSucursal: any;
 
-  constructor(private data: ApiService, private route: ActivatedRoute) {
+  constructor(private data: ApiService, private route: ActivatedRoute, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.route.url.subscribe(res=>console.log(res[0].path))
-    this.form = new FormGroup({
-      nombre: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['nombre'] || '' : ''),
-      calle: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['calle'] || '' : ''),
-      numExt: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['num_ext'] || '' : ''),
-      numInt: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['num_int'] || '' : ''),
-      colonia: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['colonia'] || '' : ''),
-      cp: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['cp'] || '' : ''),
-      telefono: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['telefono'] || '' : ''),
-      gerente: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['gerente'] || '' : ''),
-      encargado: new FormControl(this.dataSucursal !== undefined ? this.dataSucursal['encargado'] || '' : '')
+    this.form = this.fb.group({
+      nombre:  this.dataSucursal ? this.dataSucursal['nombre'] || '' : '',
+      calle: this.dataSucursal ? this.dataSucursal['calle'] || '' : '',
+      numExt: this.dataSucursal ? this.dataSucursal['num_ext'] || '' : '',
+      numInt: this.dataSucursal ? this.dataSucursal['num_int'] || '' : '',
+      colonia: this.dataSucursal ? this.dataSucursal['colonia'] || '' : '',
+      cp: this.dataSucursal ? this.dataSucursal['cp'] || '' : '',
+      telefono: this.dataSucursal ? this.dataSucursal['telefono'] || '' : '',
+      gerente: this.dataSucursal ? this.dataSucursal['gerente'] || '' : '',
+      encargado: this.dataSucursal ? this.dataSucursal['encargado'] || '' : ''
     })
   }
 

@@ -3,38 +3,35 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../../services/api.service";
 import {ActivatedRoute} from "@angular/router";
-import {UsuarioDialogComponent} from "../usuario-dialog/usuario-dialog.component";
-import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Cliente} from "../../models/cliente";
+import {ClienteDialogComponent} from "../cliente-dialog/cliente-dialog.component";
 
 @Component({
-  selector: 'app-fomulario-usuario',
-  templateUrl: './fomulario-usuario.component.html',
-  styleUrls: ['./fomulario-usuario.component.css']
+  selector: 'app-formulario-cliente',
+  templateUrl: './formulario-cliente.component.html',
+  styleUrls: ['./formulario-cliente.component.css']
 })
-export class FomularioUsuarioComponent implements OnInit {
+export class FormularioClienteComponent implements OnInit {
 
   form: FormGroup;
-  @Input() dialogRef: MatDialogRef<UsuarioDialogComponent>;
-  @Input() dataUsuario: Usuario;
+  @Input() dialogRef: MatDialogRef<ClienteDialogComponent>;
+  @Input() dataCliente: Cliente;
 
-  constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar) {
-  }
+  constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.route.url.subscribe(res=>console.log(res[0].path))
     this.form = new FormGroup({
-      nombre: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['nombre_usuario'] || '' : ''),
-      apellido_paterno: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['apellido_paterno'] || '' : ''),
-      apellido_materno: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['apellido_materno'] || '' : ''),
-      telefono: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['telefono_usuario'] || '' : ''),
-      sucursal_id: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['sucursal_id'] || '' : ''),
-      email: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['email'] || '' : ''),
-      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '')
-    })
+      denominacion: new FormControl(this.dataCliente !== undefined ? this.dataCliente['denominacion'] || '' : ''),
+      asesor_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['asesor_id'] || '' : ''),
+      sucursal_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['sucursal_id'] || '' : ''),
+      requiere_factura: new FormControl(this.dataCliente !== undefined ? this.dataCliente['requiere_factura'] || '' : ''),
+      email: new FormControl(this.dataCliente !== undefined ? this.dataCliente['sucursal_id'] || '' : '')
+  })
   }
 
   enviarFormulario() {
+  /*
     console.log("Enviar formulario-sucursal en el componenteb individual formulario-sucursal")
     console.log(this.dataUsuario)
     console.log(this.form)
@@ -74,5 +71,7 @@ export class FomularioUsuarioComponent implements OnInit {
         console.log(err)
       })
     }
+    */
   }
+
 }

@@ -7,6 +7,8 @@ import {Sucursal} from "../../models/sucursal";
 import {ApiService} from "../../services/api.service";
 import {MatDialog} from "@angular/material/dialog";
 import {SucursalDialogComponent} from "../sucursal-dialog/sucursal-dialog.component";
+import {Usuario} from "../../models/usuario";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-sucursal',
@@ -21,7 +23,7 @@ export class SucursalComponent{
   @Output() focusChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
   dataSource: MatTableDataSource<Sucursal>;
 
-  constructor(private data: ApiService, private dialog: MatDialog) {
+  constructor(private data: ApiService, private dialog: MatDialog, private snack: MatSnackBar) {
     this.dataSource = new MatTableDataSource();
     this.sort = new MatSort();
     console.log(this.sort)
@@ -35,15 +37,37 @@ export class SucursalComponent{
       console.log(this.paginator)
       console.log(this.sort)
       console.log(this.dataSource)
+      
+    })
+
+  }
+
+  mostrarDialogo(element: Sucursal): void {
+    this.data.openConfirmationDialog().subscribe(res=>{
+      if(res){
+        this.deleteSucursal(element);
+      }
     })
   }
 
   deleteSucursal(element: Sucursal){
     console.log(element.id)
-    this.data.deleteSucursal(element).subscribe(res=>{
-      console.log(res)
-      this.getSucursales();
-    })
+    this.data.deleteSucursal(element).toPromise()
+      .then((res)=>{
+        console.log(res)
+        this.getSucursales();
+        let snackRef = this.snack.open("Se eliminó correctamente el registro!", "Ok!")
+        setTimeout(()=>{
+          snackRef.dismiss();
+        },3000)
+      })
+      .catch((err)=>{
+        console.log(err)
+        let snackRef = this.snack.open("Ocurrió un error!", "Ok!")
+        setTimeout(()=>{
+          snackRef.dismiss();
+        },3000)
+      })
   }
 
   openDialog(element: Sucursal): void {
@@ -56,6 +80,7 @@ export class SucursalComponent{
     dialogRef.afterClosed().subscribe(result => {
       this.getSucursales();
     });
+
 
     console.log('Width', Math.round((screen.width/3))+'px');
     console.log('Height', Math.round((screen.height/1.8))+'px');

@@ -5,10 +5,9 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {MatTableDataSource} from "@angular/material/table";
-import {Sucursal} from "../../models/sucursal";
 import {MatDialog} from "@angular/material/dialog";
-import {SucursalDialogComponent} from "../sucursal-dialog/sucursal-dialog.component";
 import {UsuarioDialogComponent} from "../usuario-dialog/usuario-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-usuario',
@@ -23,10 +22,18 @@ export class UsuarioComponent {
   @Output() focusChange: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
   dataSource: MatTableDataSource<Usuario>;
 
-  constructor(private data: ApiService, private dialog: MatDialog) {
+  constructor(private data: ApiService, private dialog: MatDialog, private snack: MatSnackBar) {
     this.dataSource = new MatTableDataSource();
     this.sort = new MatSort();
     console.log(this.sort)
+  }
+
+  mostrarDialogo(element: Usuario): void {
+    this.data.openConfirmationDialog().subscribe(res=>{
+      if(res){
+        this.deleteUSuario(element);
+      }
+    })
   }
 
   getUsuarios(){
@@ -39,15 +46,27 @@ export class UsuarioComponent {
       console.log(this.dataSource)
     })
   }
-/*
-  deleteSucursal(element: Sucursal){
+
+  deleteUSuario(element: Usuario){
     console.log(element.id)
-    this.data.deleteSucursal(element).subscribe(res=>{
-      console.log(res)
-      this.getSucursales();
-    })
+    this.data.deleteUsuario(element).toPromise()
+      .then((res)=>{
+        console.log(res)
+        this.getUsuarios();
+        let snackRef = this.snack.open("Se eliminó correctamente el registro!", "Ok!")
+        setTimeout(()=>{
+          snackRef.dismiss();
+        },3000)
+      })
+      .catch((err)=>{
+        console.log(err)
+        let snackRef = this.snack.open("Ocurrió un error!", "Ok!")
+        setTimeout(()=>{
+          snackRef.dismiss();
+        },3000)
+      })
   }
-*/
+
 
   openDialog(element: Usuario): void {
     const dialogRef = this.dialog.open(UsuarioDialogComponent, {

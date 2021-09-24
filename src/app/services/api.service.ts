@@ -3,8 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {Sucursal} from "../models/sucursal";
 import {Observable} from "rxjs";
 import { environment } from "../../environments/environment";
-import {rendererTypeName} from "@angular/compiler";
 import {Usuario} from "../models/usuario";
+import {ConfirmacionDialogComponent} from "../components/confirmacion-dialog/confirmacion-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 
@@ -13,7 +14,14 @@ import {Usuario} from "../models/usuario";
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
+
+  openConfirmationDialog(): Observable<boolean>{
+   return this.dialog
+      .open(ConfirmacionDialogComponent, {
+        data: `¿Desea confirmar la operación?`
+      }).afterClosed()
+  }
 
   getSucursales():Observable<any>{
     return this.http.get(environment.API.sucursalesUrl);
@@ -40,7 +48,13 @@ export class ApiService {
   }
 
   updateUsuario(usuario: Usuario, newUsuario: Usuario){
+    console.log("lo que recibe le servicio como nuevo usuario")
+    console.log(newUsuario)
     return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`,newUsuario);
+  }
+
+  deleteUsuario(usuario: Usuario): Observable<any>{
+    return this.http.delete(`${environment.API.usuariosUrl}${usuario.id}`);
   }
 
 }

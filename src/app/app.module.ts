@@ -30,6 +30,10 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioDialogComponent } from './components/usuario-dialog/usuario-dialog.component';
 import { FomularioUsuarioComponent } from './components/fomulario-usuario/fomulario-usuario.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ConfirmacionDialogComponent } from './components/confirmacion-dialog/confirmacion-dialog.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
+import { FormularioClienteComponent } from './components/formulario-cliente/formulario-cliente.component';
+import { ClienteDialogComponent } from './components/cliente-dialog/cliente-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     NavbarComponent,
     UsuarioComponent,
     UsuarioDialogComponent,
-    FomularioUsuarioComponent
+    FomularioUsuarioComponent,
+    ConfirmacionDialogComponent,
+    ClienteComponent,
+    FormularioClienteComponent,
+    ClienteDialogComponent
   ],
   imports: [
     BrowserModule,

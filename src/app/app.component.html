@@ -4,9 +4,15 @@
       <div class="row">
         <div class="col">
           <mat-selection-list [multiple]="false" role="list">
-            <mat-list-option (click)="sidenav.close()" [routerLink] = "['sucursales']">Sucursales</mat-list-option>
-            <mat-list-option (click)="sidenav.close()" [routerLink] = "['usuarios']">Usuarios</mat-list-option>
-            <mat-list-option >---------</mat-list-option>
+            <mat-list-option (click)="sidenav.close()" [routerLink]="['sucursales']">
+              <mat-icon style="display: contents">store</mat-icon>
+              Sucursales
+            </mat-list-option>
+            <mat-list-option (click)="sidenav.close()" [routerLink]="['usuarios']">
+              <mat-icon style="display: contents">person</mat-icon>
+              Usuarios
+            </mat-list-option>
+            <mat-list-option (click)="sidenav.close()" [routerLink]="['clientes']">uyfgfuygyi</mat-list-option>
           </mat-selection-list>
         </div>
       </div>
@@ -15,7 +21,9 @@
 
   <mat-sidenav-content>
     <p>
-      <button mat-button (click)="sidenav.toggle()"><mat-icon color="primary">menu</mat-icon></button>
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon color="primary">menu</mat-icon>
+      </button>
     </p>
     <div style="margin: auto 5em 5em 5em" class="mt-5">
       <router-outlet></router-outlet>

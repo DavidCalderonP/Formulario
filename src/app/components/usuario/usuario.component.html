@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" style="background-color: rgb(240,240,240);">
   <div class="col" style="text-align: center">
-    <h1>Usuarios</h1>
+    <h1 style="font-size: xxx-large">Usuarios</h1>
     <mat-tab-group (focusChange)="myTabFocusChange($event)" style="align-self: center">
       <mat-tab label="Agregar Usuarios">
         <div class="form">
@@ -9,12 +9,12 @@
       </mat-tab>
 
       <mat-tab label="Ver Usuarios">
-        <div style="display: grid" class="mat-table">
+        <div style="display: grid; text-align: left" class="mat-table">
           <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
             <ng-container matColumnDef="nombre">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre.</th>
-              <td mat-cell *matCellDef="let element"> {{element.nombre | titlecase }} </td>
+              <td mat-cell *matCellDef="let element"> {{element.nombre_usuario | titlecase }} </td>
             </ng-container>
 
             <ng-container matColumnDef="apellido_paterno">
@@ -24,12 +24,12 @@
 
             <ng-container matColumnDef="apellido_materno">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido Materno</th>
-              <td mat-cell *matCellDef="let element"> {{element.apellido_materno}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.apellido_materno | titlecase}} </td>
             </ng-container>
 
             <ng-container matColumnDef="telefono">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</th>
-              <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.telefono_usuario}} </td>
             </ng-container>
 
             <ng-container matColumnDef="sucursal_id">
@@ -47,8 +47,8 @@
               <td mat-cell *matCellDef="let element">
                 <button class="btn btn-outline-primary" (click)="openDialog(element)" mat-button><i
                   class="fa fa-pencil fa-fw"></i></button>
-                <!-- <button class="btn btn-outline-danger" (click)="deleteSucursal(element)" mat-button><i
-                   class="fa fa-trash-o"></i></button>--->
+                <button class="btn btn-outline-danger" (click)="mostrarDialogo(element)" mat-button><i
+                   class="fa fa-trash-o"></i></button>
               </td>
             </ng-container>
 
