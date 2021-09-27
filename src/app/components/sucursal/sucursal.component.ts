@@ -37,7 +37,6 @@ export class SucursalComponent{
       console.log(this.paginator)
       console.log(this.sort)
       console.log(this.dataSource)
-      
     })
 
   }

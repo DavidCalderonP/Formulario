@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {UsuarioDialogComponent} from "../usuario-dialog/usuario-dialog.component";
 import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Sucursal} from "../../models/sucursal";
 
 @Component({
   selector: 'app-fomulario-usuario',
@@ -14,11 +15,17 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class FomularioUsuarioComponent implements OnInit {
 
+  optionsSucursales: Sucursal[] = [];
   form: FormGroup;
   @Input() dialogRef: MatDialogRef<UsuarioDialogComponent>;
   @Input() dataUsuario: Usuario;
 
   constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar) {
+    this.data.getSucursales().subscribe(res=>{
+      this.optionsSucursales = res;
+      console.log(this.optionsSucursales)
+    })
+
   }
 
   ngOnInit(): void {

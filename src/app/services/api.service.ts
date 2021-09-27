@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 import {Usuario} from "../models/usuario";
 import {ConfirmacionDialogComponent} from "../components/confirmacion-dialog/confirmacion-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Cliente} from "../models/cliente";
 
 
 
@@ -55,6 +56,30 @@ export class ApiService {
 
   deleteUsuario(usuario: Usuario): Observable<any>{
     return this.http.delete(`${environment.API.usuariosUrl}${usuario.id}`);
+  }
+
+  //=========================================================================================
+
+  getClientes():Observable<any>{
+    return this.http.get(environment.API.clientesUrl)
+  }
+
+  getCliente(cliente: Cliente):Observable<any>{
+    return this.http.get(`${environment.API.usuariosUrl}${cliente.id}`)
+  }
+
+  saveCliente(cliente: Cliente){
+    return this.http.post(environment.API.clientesUrl, cliente);
+  }
+
+  deleteCliente(cliente: Cliente):Observable<any>{
+    return this.http.delete(`${environment.API.clientesUrl}${cliente.id}`);
+  }
+
+  updateCliente(cliente: Cliente, newCliente: Cliente){
+    console.log("nuevo cliente")
+    console.log(newCliente)
+    return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente);
   }
 
 }

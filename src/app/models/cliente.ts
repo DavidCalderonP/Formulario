@@ -5,4 +5,7 @@ export interface Cliente {
   sucursal_id: number;
   requiere_factura: boolean;
   email: string;
+  nombre?: string;
+  nombre_usuario?: string;
+  apellido_paterno?: string;
 }

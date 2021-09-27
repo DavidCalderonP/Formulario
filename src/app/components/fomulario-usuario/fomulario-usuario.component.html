@@ -17,8 +17,18 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Sucursal</mat-label>
+    <mat-select formControlName="sucursal_id">
+      <mat-option *ngFor="let option of optionsSucursales" [value]="option.id">
+        {{ option.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--
+  <mat-form-field appearance="fill">
+    <mat-label>Sucursal</mat-label>
     <input type="text" formControlName="sucursal_id" matInput>
   </mat-form-field>
+  -->
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input type="text" formControlName="email" matInput>
