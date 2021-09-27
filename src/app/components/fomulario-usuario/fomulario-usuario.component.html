@@ -2,18 +2,22 @@
   <mat-form-field appearance="fill">
     <mat-label>Nombre(s)</mat-label>
     <input type="text" formControlName="nombre" matInput>
+    <mat-error *ngIf="form.controls.nombre.errors">{{ errores('nombre') }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Apellido Paterno</mat-label>
     <input type="text" formControlName="apellido_paterno" matInput>
+    <mat-error *ngIf="form.controls.apellido_paterno.errors">{{ errores('apellido_paterno') }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Apellido Materno</mat-label>
     <input type="text" formControlName="apellido_materno" matInput>
+    <mat-error *ngIf="form.controls.apellido_materno.errors">{{ errores('apellido_materno') }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Teléfono</mat-label>
     <input type="text" formControlName="telefono" matInput>
+    <mat-error *ngIf="form.controls.telefono.errors">{{ errores('telefono') }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Sucursal</mat-label>
@@ -22,20 +26,17 @@
         {{ option.nombre }}
       </mat-option>
     </mat-select>
+    <mat-error *ngIf="form.controls.sucursal_id.errors">{{ errores('sucursal_id') }}</mat-error>
   </mat-form-field>
-  <!--
-  <mat-form-field appearance="fill">
-    <mat-label>Sucursal</mat-label>
-    <input type="text" formControlName="sucursal_id" matInput>
-  </mat-form-field>
-  -->
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input type="text" formControlName="email" matInput>
+    <mat-error *ngIf="form.controls.email.errors">{{ errores('email') }}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Contraseña</mat-label>
     <input type="password" formControlName="password" matInput>
+    <mat-error *ngIf="form.controls.password.errors">{{ errores('password') }}</mat-error>
   </mat-form-field>
   <button type="submit" style="margin-bottom: 1em;" mat-raised-button color="primary">Enviar Información</button>
 </form>
