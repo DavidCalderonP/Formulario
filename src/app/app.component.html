@@ -16,6 +16,15 @@
               <mat-icon style="display: contents">group</mat-icon>
               Clientes
             </mat-list-option>
+            <mat-list-option (click)="sidenav.close();generateNewToken()">
+              <mat-icon style="display: contents">vpn_key</mat-icon>
+              Generar llave
+            </mat-list-option>
+
+            <mat-list-option (click)="sidenav.close();logout()">
+              <mat-icon style="display: contents">logout</mat-icon>
+              Cerrar sesión
+            </mat-list-option>
           </mat-selection-list>
         </div>
       </div>
@@ -23,11 +32,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <p>
+    <div>
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon color="primary">menu</mat-icon>
       </button>
-    </p>
+    </div>
     <div style="margin: auto 5em 5em 5em" class="mt-5">
       <router-outlet></router-outlet>
     </div>

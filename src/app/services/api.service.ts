@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Sucursal} from "../models/sucursal";
-import {Observable} from "rxjs";
-import { environment } from "../../environments/environment";
+import {Observable, ObservableInput} from "rxjs";
+import {environment} from "../../environments/environment";
 import {Usuario} from "../models/usuario";
 import {ConfirmacionDialogComponent} from "../components/confirmacion-dialog/confirmacion-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Cliente} from "../models/cliente";
-
+import {catchError} from "rxjs/operators";
+import {error} from "@angular/compiler/src/util";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -15,71 +17,117 @@ import {Cliente} from "../models/cliente";
 })
 export class ApiService {
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  private logged: boolean;
 
-  openConfirmationDialog(): Observable<boolean>{
-   return this.dialog
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
+
+  toLocalStorage(respuesta: any) {
+    for (const res in respuesta) {
+      localStorage.setItem(res, respuesta[res]);
+    }
+  }
+
+  clearLocalStorage(){
+    localStorage.clear();
+  }
+
+  openConfirmationDialog(): Observable<boolean> {
+    return this.dialog
       .open(ConfirmacionDialogComponent, {
         data: `¿Desea confirmar la operación?`
       }).afterClosed()
   }
 
-  getSucursales():Observable<any>{
-    return this.http.get(environment.API.sucursalesUrl);
+  getSucursales(): Observable<any> {
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+
+    return this.http.get(environment.API.sucursalesUrl, {headers});
   }
 
-  saveSucursal(sucursal: Sucursal):Observable<any>{
+  saveSucursal(sucursal: Sucursal): Observable<any> {
     return this.http.post(environment.API.sucursalesUrl, sucursal);
   }
 
-  deleteSucursal(sucursal: Sucursal): Observable<any>{
+  deleteSucursal(sucursal: Sucursal): Observable<any> {
     return this.http.delete(`${environment.API.sucursalesUrl}${sucursal.id}`);
   }
 
-  updateSucursal(sucursal: Sucursal, newSucursal: Sucursal){
+  updateSucursal(sucursal: Sucursal, newSucursal: Sucursal) {
     return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, newSucursal)
   }
 
-  getUsuarios():Observable<any>{
-    return this.http.get(`${environment.API.usuariosUrl}`);
+  getUsuarios(): Observable<any> {
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+
+    return this.http.get(`${environment.API.usuariosUrl}`, {headers});
   }
 
-  saveUsuario(usuario: Usuario): Observable<any>{
+  saveUsuario(usuario: Usuario): Observable<any> {
+    console.log('guardando usuario')
     return this.http.post(environment.API.usuariosUrl, usuario);
   }
 
-  updateUsuario(usuario: Usuario, newUsuario: Usuario){
+  updateUsuario(usuario: Usuario, newUsuario: Usuario) {
     console.log("lo que recibe le servicio como nuevo usuario")
     console.log(newUsuario)
-    return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`,newUsuario);
+    return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`, newUsuario);
   }
 
-  deleteUsuario(usuario: Usuario): Observable<any>{
+  deleteUsuario(usuario: Usuario): Observable<any> {
     return this.http.delete(`${environment.API.usuariosUrl}${usuario.id}`);
   }
 
   //=========================================================================================
 
-  getClientes():Observable<any>{
-    return this.http.get(environment.API.clientesUrl)
+  getClientes(): Observable<any> {
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.get(environment.API.clientesUrl, {headers})
   }
 
-  getCliente(cliente: Cliente):Observable<any>{
+  getCliente(cliente: Cliente): Observable<any> {
     return this.http.get(`${environment.API.usuariosUrl}${cliente.id}`)
   }
 
-  saveCliente(cliente: Cliente){
+  saveCliente(cliente: Cliente) {
     return this.http.post(environment.API.clientesUrl, cliente);
   }
 
-  deleteCliente(cliente: Cliente):Observable<any>{
+  deleteCliente(cliente: Cliente): Observable<any> {
     return this.http.delete(`${environment.API.clientesUrl}${cliente.id}`);
   }
 
-  updateCliente(cliente: Cliente, newCliente: Cliente){
+  updateCliente(cliente: Cliente, newCliente: Cliente) {
     console.log("nuevo cliente")
     console.log(newCliente)
     return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente);
+  }
+
+  getToken(usuario: Usuario | {email: string, password: string}) {
+    //let headers = {
+    //  headers: new HttpHeaders().set('Content-Type', 'application/form-data')
+    //}
+    return this.http.post(environment.API.loginUrl, usuario).pipe(
+      catchError(err => {
+        return err;
+      })
+    );
+  }
+
+  logout(usuario: Usuario | {email: string, password: string}){
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.post(environment.API.logoutUrl, usuario, {headers}).pipe(
+      catchError(err => {
+        return err;
+      })
+    );
   }
 
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../../services/api.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UsuarioDialogComponent} from "../usuario-dialog/usuario-dialog.component";
 import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -15,12 +15,13 @@ import {Sucursal} from "../../models/sucursal";
 })
 export class FomularioUsuarioComponent implements OnInit {
 
+  @Input() fromLogin: boolean;
   optionsSucursales: Sucursal[] = [];
   form: FormGroup;
   @Input() dialogRef: MatDialogRef<UsuarioDialogComponent>;
   @Input() dataUsuario: Usuario;
 
-  constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar) {
+  constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar, private router: Router) {
     this.data.getSucursales().subscribe(res=>{
       this.optionsSucursales = res;
       console.log(this.optionsSucursales)
@@ -99,11 +100,48 @@ export class FomularioUsuarioComponent implements OnInit {
       ...newUsuarioWtihoutPass,
       password: aux['password']
     }
+    let reg = {
+      email: this.form.value['nombre'],
+      password: this.form.value['password']
+    }
 
+    if(this.fromLogin){
+
+      this.data.saveUsuario(newUsuarioWithPassword)
+        .toPromise()
+        .then(()=>{
+          this.data.getToken(reg)
+            .toPromise()
+            .then(res=>{
+              this.data.toLocalStorage(res)
+              let ref = this.snack.open("Se accedió de manera exitosa!", "Ok!")
+              setTimeout(()=>{
+                ref.dismiss();
+                this.router.navigateByUrl('sucursales');
+              })
+            })
+            .catch(err=>{
+              console.log(err)
+              let ref = this.snack.open("Hubo un error al tratar de obtener el token")
+              setTimeout(()=>{
+                ref.dismiss();
+              },3500)
+            })
+        })
+        .catch(err=>{
+          console.log(err)
+          let ref = this.snack.open("Hubo un error al tratar de obtener crear el usuario")
+          setTimeout(()=>{
+            ref.dismiss();
+          },3500)
+        })
+      return;
+    }
     if(this.dataUsuario) {
       this.data.updateUsuario(this.dataUsuario,aux['password']==="" ? newUsuarioWtihoutPass : newUsuarioWithPassword).toPromise().then(res => {
         console.log(res);
         this.dialogRef.close();
+
       }).catch(err => {
         console.log(err.status)
         console.log(err)

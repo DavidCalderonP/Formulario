@@ -7,7 +7,9 @@ export const environment = {
   API: {
     sucursalesUrl: "http://10.112.32.145:8000/api/sucursales/",
     usuariosUrl: "http://10.112.32.145:8000/api/users/",
-    clientesUrl: "http://10.112.32.145:8000/api/clientes/"
+    clientesUrl: "http://10.112.32.145:8000/api/clientes/",
+    loginUrl: "http://10.112.32.145:8000/api/login/",
+    logoutUrl: "http://10.112.32.145:8000/api/logout/"
   }
 };
 

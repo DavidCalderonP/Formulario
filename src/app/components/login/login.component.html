@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div>
+        <mat-card style="text-align: -webkit-center;">
+          <mat-card-header>
+            <mat-card-title><h1>Entrar</h1></mat-card-title>
+          </mat-card-header>
+          <form [formGroup]="form" (submit)="logIn()" style="display: grid">
+            <mat-card-content style="display: grid">
+              <mat-form-field>
+                <input matInput formControlName="email" placeholder="Correo electronico">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="password" placeholder="Contraseña">
+              </mat-form-field>
+              <a href="assets/pcf.jpeg" style="text-align: right"><small>Olvidaste la contraseña?</small></a>
+            </mat-card-content>
+            <button mat-stroked-button color="primary" type="submit" class=" mb-3 btn-block">Entrar</button>
+          </form>
+          <a href="registrar">
+            <small>Eres nuevo? Crea una cuenta.</small>
+          </a>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+

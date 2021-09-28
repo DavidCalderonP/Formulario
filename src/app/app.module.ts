@@ -34,6 +34,9 @@ import { ConfirmacionDialogComponent } from './components/confirmacion-dialog/co
 import { ClienteComponent } from './components/cliente/cliente.component';
 import { FormularioClienteComponent } from './components/formulario-cliente/formulario-cliente.component';
 import { ClienteDialogComponent } from './components/cliente-dialog/cliente-dialog.component';
+import { LoginComponent } from './components/login/login.component';
+import {MatCardModule} from "@angular/material/card";
+import { RegistrarComponent } from './components/registrar/registrar.component';
 
 @NgModule({
   declarations: [
@@ -48,33 +51,36 @@ import { ClienteDialogComponent } from './components/cliente-dialog/cliente-dial
     ConfirmacionDialogComponent,
     ClienteComponent,
     FormularioClienteComponent,
-    ClienteDialogComponent
+    ClienteDialogComponent,
+    LoginComponent,
+    RegistrarComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    HttpClientModule,
-    MatTabsModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatDividerModule,
-    MatListModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        HttpClientModule,
+        MatTabsModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatDividerModule,
+        MatListModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatCardModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
