@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Sucursal} from "../models/sucursal";
-import {Observable, ObservableInput} from "rxjs";
+import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Usuario} from "../models/usuario";
 import {ConfirmacionDialogComponent} from "../components/confirmacion-dialog/confirmacion-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Cliente} from "../models/cliente";
 import {catchError} from "rxjs/operators";
-import {error} from "@angular/compiler/src/util";
 import {Router} from "@angular/router";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 
 @Injectable({
@@ -17,9 +17,24 @@ import {Router} from "@angular/router";
 })
 export class ApiService {
 
-  private logged: boolean;
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private jwt: JwtHelperService) {
+  }
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
+  isAuthenticated():Promise<any | boolean> {
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.post(environment.API.validarToken, null, {headers}).toPromise()
+      .then(res => {
+        console.log(res)
+        return true;
+      })
+      .catch(err => {
+        console.log(err)
+        return !(err.status>400);
+      });
+
+  }
 
   toLocalStorage(respuesta: any) {
     for (const res in respuesta) {
@@ -27,7 +42,7 @@ export class ApiService {
     }
   }
 
-  clearLocalStorage(){
+  clearLocalStorage() {
     localStorage.clear();
   }
 
@@ -36,6 +51,14 @@ export class ApiService {
       .open(ConfirmacionDialogComponent, {
         data: `¿Desea confirmar la operación?`
       }).afterClosed()
+  }
+
+  getRegisterSucursales(): Observable<any> {
+    return this.http.get(environment.API.getSucursales,);
+  }
+
+  addRegisterUser(usuario: Usuario) {
+    return this.http.post(environment.API.addUser, usuario);
   }
 
   getSucursales(): Observable<any> {
@@ -51,11 +74,17 @@ export class ApiService {
   }
 
   deleteSucursal(sucursal: Sucursal): Observable<any> {
-    return this.http.delete(`${environment.API.sucursalesUrl}${sucursal.id}`);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.delete(`${environment.API.sucursalesUrl}${sucursal.id}`, {headers});
   }
 
   updateSucursal(sucursal: Sucursal, newSucursal: Sucursal) {
-    return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, newSucursal)
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.put(`${environment.API.sucursalesUrl}${sucursal.id}`, newSucursal, {headers})
   }
 
   getUsuarios(): Observable<any> {
@@ -78,7 +107,10 @@ export class ApiService {
   }
 
   deleteUsuario(usuario: Usuario): Observable<any> {
-    return this.http.delete(`${environment.API.usuariosUrl}${usuario.id}`);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.delete(`${environment.API.usuariosUrl}${usuario.id}`, {headers});
   }
 
   //=========================================================================================
@@ -108,7 +140,7 @@ export class ApiService {
     return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente);
   }
 
-  getToken(usuario: Usuario | {email: string, password: string}) {
+  login(usuario: Usuario | { email: string, password: string }) {
     //let headers = {
     //  headers: new HttpHeaders().set('Content-Type', 'application/form-data')
     //}
@@ -119,7 +151,7 @@ export class ApiService {
     );
   }
 
-  logout(usuario: Usuario | {email: string, password: string}){
+  logout(usuario: Usuario | { email: string, password: string }) {
     const headers = {
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
@@ -128,6 +160,7 @@ export class ApiService {
         return err;
       })
     );
+
   }
 
 }

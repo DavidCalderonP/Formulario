@@ -37,6 +37,7 @@ import { ClienteDialogComponent } from './components/cliente-dialog/cliente-dial
 import { LoginComponent } from './components/login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistrarComponent } from './components/registrar/registrar.component';
+import {JWT_OPTIONS, JwtHelperService, JwtModule, JwtModuleOptions} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -81,7 +82,10 @@ import { RegistrarComponent } from './components/registrar/registrar.component';
         MatSnackBarModule,
         MatCardModule
     ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

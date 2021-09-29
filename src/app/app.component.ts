@@ -8,6 +8,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
 import {SucursalDialogComponent} from "./components/sucursal-dialog/sucursal-dialog.component";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -18,8 +20,7 @@ export class AppComponent {
 
   opened: boolean;
 
-  constructor(private data: ApiService, private router: Router) {
-  }
+  constructor(public data: ApiService, private router: Router, private snack: MatSnackBar) {}
 
   generateNewToken() {
     let credentials = {
@@ -27,25 +28,32 @@ export class AppComponent {
       password: '123456'
     };
 
-    this.data.getToken(credentials)
+    this.data.login(credentials)
       .subscribe(res => {
-      this.data.toLocalStorage(res);
-      this.data.toLocalStorage(credentials);
-      console.log(credentials);
-      console.log(res);
-    })
+        this.data.toLocalStorage(res);
+        this.data.toLocalStorage(credentials);
+        console.log(credentials);
+        console.log(res);
+      })
   }
 
-  logout(){
+  logout() {
     let credentials = {
       email: localStorage.getItem('email') || '',
       password: localStorage.getItem('password') || ''
     };
-    this.data.logout(credentials)
-      .subscribe(res=>{
+    this.data.logout(credentials).toPromise()
+      .then(res => {
         this.data.clearLocalStorage();
-        this.router.navigateByUrl('login')
+        //this.router.navigateByUrl('login')
+        let ref = this.snack.open(`Sesión cerrada correctamente.`, "Ok!");
+        setTimeout(() => {
+          ref.dismiss()
+        }, 5000)
         console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 

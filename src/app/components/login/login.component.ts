@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       password: this.form.value['password']
     }
 
-    this.data.getToken(credentials).toPromise()
+    this.data.login(credentials).toPromise()
       .then(res=>{
         this.data.toLocalStorage(res);
         this.data.toLocalStorage(credentials);

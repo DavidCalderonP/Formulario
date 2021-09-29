@@ -6,7 +6,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UsuarioDialogComponent} from "../usuario-dialog/usuario-dialog.component";
 import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Sucursal} from "../../models/sucursal";
+
+interface SucursalesOptions {
+  id    : number,
+  nombre: string
+}
 
 @Component({
   selector: 'app-fomulario-usuario',
@@ -16,14 +20,15 @@ import {Sucursal} from "../../models/sucursal";
 export class FomularioUsuarioComponent implements OnInit {
 
   @Input() fromLogin: boolean;
-  optionsSucursales: Sucursal[] = [];
+  optionsSucursales: SucursalesOptions[] = [];
   form: FormGroup;
   @Input() dialogRef: MatDialogRef<UsuarioDialogComponent>;
   @Input() dataUsuario: Usuario;
 
   constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar, private router: Router) {
-    this.data.getSucursales().subscribe(res=>{
+    this.data.getRegisterSucursales().subscribe((res: SucursalesOptions[])=>{
       this.optionsSucursales = res;
+      //console.log(res)
       console.log(this.optionsSucursales)
     })
 
@@ -38,7 +43,7 @@ export class FomularioUsuarioComponent implements OnInit {
       telefono: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['telefono_usuario'] || '' : '', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]),
       sucursal_id: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['sucursal_id'] || '' : '', [Validators.required]),
       email: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['email'] || '' : '', [Validators.required, Validators.email]),
-      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '',[Validators.required, Validators.minLength(8), Validators.maxLength(15)])
+      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '',[Validators.required])
     })
   }
 
@@ -101,24 +106,25 @@ export class FomularioUsuarioComponent implements OnInit {
       password: aux['password']
     }
     let reg = {
-      email: this.form.value['nombre'],
+      email: this.form.value['email'],
       password: this.form.value['password']
     }
 
     if(this.fromLogin){
 
-      this.data.saveUsuario(newUsuarioWithPassword)
+      this.data.addRegisterUser(newUsuarioWithPassword)
         .toPromise()
         .then(()=>{
-          this.data.getToken(reg)
+          this.data.login(reg)
             .toPromise()
             .then(res=>{
               this.data.toLocalStorage(res)
-              let ref = this.snack.open("Se accedió de manera exitosa!", "Ok!")
+              this.data.toLocalStorage(reg);
+              this.router.navigateByUrl('sucursales');
+              let ref = this.snack.open(`Bienvenido ${newUsuarioWithPassword.nombre} ${newUsuarioWithPassword.apellido_paterno}`, "Ok!")
               setTimeout(()=>{
                 ref.dismiss();
-                this.router.navigateByUrl('sucursales');
-              })
+              },7500)
             })
             .catch(err=>{
               console.log(err)
