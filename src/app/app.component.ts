@@ -23,17 +23,21 @@ export class AppComponent {
   constructor(public data: ApiService, private router: Router, private snack: MatSnackBar) {}
 
   generateNewToken() {
+    console.log("intentando generar un token")
     let credentials = {
       email: 'david@gmail.com',
       password: '123456'
     };
 
-    this.data.login(credentials)
-      .subscribe(res => {
+    this.data.login(credentials).toPromise()
+      .then(res=>{
         this.data.toLocalStorage(res);
         this.data.toLocalStorage(credentials);
         console.log(credentials);
         console.log(res);
+      })
+      .catch(err=>{
+        console.log(err)
       })
   }
 
@@ -45,7 +49,7 @@ export class AppComponent {
     this.data.logout(credentials).toPromise()
       .then(res => {
         this.data.clearLocalStorage();
-        //this.router.navigateByUrl('login')
+        this.router.navigateByUrl('login')
         let ref = this.snack.open(`Sesión cerrada correctamente.`, "Ok!");
         setTimeout(() => {
           ref.dismiss()

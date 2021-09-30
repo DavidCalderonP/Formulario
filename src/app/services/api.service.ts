@@ -70,6 +70,9 @@ export class ApiService {
   }
 
   saveSucursal(sucursal: Sucursal): Observable<any> {
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
     return this.http.post(environment.API.sucursalesUrl, sucursal);
   }
 
@@ -97,13 +100,19 @@ export class ApiService {
 
   saveUsuario(usuario: Usuario): Observable<any> {
     console.log('guardando usuario')
-    return this.http.post(environment.API.usuariosUrl, usuario);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.post(environment.API.usuariosUrl, usuario, { headers });
   }
 
   updateUsuario(usuario: Usuario, newUsuario: Usuario) {
     console.log("lo que recibe le servicio como nuevo usuario")
     console.log(newUsuario)
-    return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`, newUsuario);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.put(`${environment.API.usuariosUrl}${usuario.id}`, newUsuario, { headers });
   }
 
   deleteUsuario(usuario: Usuario): Observable<any> {
@@ -123,21 +132,33 @@ export class ApiService {
   }
 
   getCliente(cliente: Cliente): Observable<any> {
-    return this.http.get(`${environment.API.usuariosUrl}${cliente.id}`)
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.get(`${environment.API.usuariosUrl}${cliente.id}`, {headers})
   }
 
   saveCliente(cliente: Cliente) {
-    return this.http.post(environment.API.clientesUrl, cliente);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.post(environment.API.clientesUrl, cliente, { headers });
   }
 
   deleteCliente(cliente: Cliente): Observable<any> {
-    return this.http.delete(`${environment.API.clientesUrl}${cliente.id}`);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.delete(`${environment.API.clientesUrl}${cliente.id}`, { headers });
   }
 
   updateCliente(cliente: Cliente, newCliente: Cliente) {
     console.log("nuevo cliente")
     console.log(newCliente)
-    return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente);
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente, { headers });
   }
 
   login(usuario: Usuario | { email: string, password: string }) {
@@ -146,6 +167,7 @@ export class ApiService {
     //}
     return this.http.post(environment.API.loginUrl, usuario).pipe(
       catchError(err => {
+        console.log(err)
         return err;
       })
     );
@@ -160,7 +182,13 @@ export class ApiService {
         return err;
       })
     );
+  }
 
+  me(){
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+    return this.http.post(environment.API.me,null,{headers})
   }
 
 }

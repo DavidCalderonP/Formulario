@@ -43,7 +43,7 @@ export class FomularioUsuarioComponent implements OnInit {
       telefono: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['telefono_usuario'] || '' : '', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]),
       sucursal_id: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['sucursal_id'] || '' : '', [Validators.required]),
       email: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['email'] || '' : '', [Validators.required, Validators.email]),
-      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '',[Validators.required])
+      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '',)
     })
   }
 

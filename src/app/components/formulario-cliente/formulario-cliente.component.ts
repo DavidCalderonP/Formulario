@@ -73,7 +73,16 @@ export class FormularioClienteComponent implements OnInit {
       this.data.updateCliente(this.dataCliente, newCliente).toPromise().then(res => {
         console.log(res);
         this.dialogRef.close();
+        let ref = this.snack.open("Cliente actualizado de manera exitosa!", "Ok!");
+        console.log("f34ougfueihwfiewjfionwief")
+        setTimeout(()=>{
+          ref.dismiss();
+        },5000)
       }).catch(err => {
+        let ref = this.snack.open("No se pudo actualizar el cliente!", "Ok!");
+        setTimeout(()=>{
+          ref.dismiss();
+        },5000)
         console.log(err.status)
         console.log(err)
       })
@@ -82,7 +91,7 @@ export class FormularioClienteComponent implements OnInit {
         console.log(res)
         console.log(this.form)
         this.form.reset();
-        let snackRef = this.snack.open("Se eliminó correctamente el registro!", "Ok!")
+        let snackRef = this.snack.open("Se agregó correctamente el registro!", "Ok!")
         setTimeout(()=>{
           snackRef.dismiss();
         },3000)

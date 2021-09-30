@@ -12,7 +12,8 @@ export const environment = {
     addUser: "http://10.112.32.145:8000/api/addUser",
     loginUrl: "http://10.112.32.145:8000/api/login/",
     logoutUrl: "http://10.112.32.145:8000/api/logout/",
-    validarToken: "http://10.112.32.145:8000/api/validarToken/"
+    validarToken: "http://10.112.32.145:8000/api/validarToken/",
+    me: "http://10.112.32.145:8000/api/me/"
   }
 };
 

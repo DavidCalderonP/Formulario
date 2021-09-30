@@ -68,7 +68,7 @@ export class ClienteComponent implements OnInit {
       .then((res)=>{
         console.log(res)
         this.getClientes();
-        let snackRef = this.snack.open("Se agregó correctamente el cliente!", "Ok!")
+        let snackRef = this.snack.open("Se eliminó correctamente el cliente!", "Ok!")
         setTimeout(()=>{
           snackRef.dismiss();
         },3000)
@@ -92,10 +92,6 @@ export class ClienteComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getClientes();
-      let snackRef = this.snack.open("Se actualizó correctamente el cliente!", "Ok!")
-      setTimeout(()=>{
-        snackRef.dismiss();
-      },3000)
     });
 
   }

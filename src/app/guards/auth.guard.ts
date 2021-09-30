@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     return await this.api.isAuthenticated().then(res => {
       if (!res) {
         this.router.navigateByUrl('login');
-        let ref = this.snack.open("Por favor inicia sesión!", "Ok!");
+        let ref = this.snack.open("Debes de iniciar sesión primero!", "Ok!");
         setTimeout(()=>{
           ref.dismiss()
         },5000)

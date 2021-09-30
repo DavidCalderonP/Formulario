@@ -33,7 +33,7 @@
     <input type="text" formControlName="email" matInput>
     <mat-error *ngIf="form.controls.email.errors">{{ errores('email') }}</mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field *ngIf="!this.dataUsuario" appearance="fill">
     <mat-label>Contraseña</mat-label>
     <input type="password" formControlName="password" matInput>
     <mat-error *ngIf="form.controls.password.errors">{{ errores('password') }}</mat-error>

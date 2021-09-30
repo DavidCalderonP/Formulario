@@ -37,7 +37,7 @@ import { ClienteDialogComponent } from './components/cliente-dialog/cliente-dial
 import { LoginComponent } from './components/login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistrarComponent } from './components/registrar/registrar.component';
-import {JWT_OPTIONS, JwtHelperService, JwtModule, JwtModuleOptions} from "@auth0/angular-jwt";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
