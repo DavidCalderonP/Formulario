@@ -73,7 +73,7 @@ export class ApiService {
     const headers = {
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
-    return this.http.post(environment.API.sucursalesUrl, sucursal);
+    return this.http.post(environment.API.sucursalesUrl, sucursal, { headers });
   }
 
   deleteSucursal(sucursal: Sucursal): Observable<any> {
@@ -159,6 +159,13 @@ export class ApiService {
       'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
     return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente, { headers });
+  }
+
+  loginGoogle(){
+    //let headers = {
+    //  'Access-Control-Allow-Origin': 'http://localhost:4200'
+    //}
+    return this.http.get(`${environment.API.loginGoogle}`);
   }
 
   login(usuario: Usuario | { email: string, password: string }) {

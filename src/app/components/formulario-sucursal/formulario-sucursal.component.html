@@ -1,39 +1,105 @@
 <form [formGroup]="form" (submit)="enviarFormulario()" class="text-align-center" style="display: grid" >
+
   <mat-form-field appearance="fill">
     <mat-label>Nombre(s)</mat-label>
-    <input type="text" formControlName="nombre" matInput>
+    <input type="text" formControlName="nombre" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('nombre').hasError('pattern') && !getControl('nombre').hasError('required')">
+      *Nombre no es válido
+    </mat-error>
+    <mat-error *ngIf="getControl('nombre').hasError('required')">
+       *El campo Nombre es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Calle</mat-label>
-    <input type="text" formControlName="calle" matInput>
+    <input type="text" formControlName="calle" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('calle').hasError('pattern') && !getControl('calle').hasError('required')">
+      *Calle no es válido
+    </mat-error>
+    <mat-error *ngIf="getControl('calle').hasError('required')">
+      *El campo Calle es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Número Ext.</mat-label>
-    <input type="text" formControlName="numExt" matInput>
+    <input type="text" formControlName="numExt" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('numExt').hasError('pattern') && !getControl('numExt').hasError('required')">
+      *Ingresar unicamente números
+    </mat-error>
+    <mat-error *ngIf="getControl('numExt').hasError('required')">
+      *El campo Número es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Número Int.</mat-label>
-    <input type="text" formControlName="numInt" matInput>
-  </mat-form-field>
+    <input type="text" formControlName="numInt" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('numInt').hasError('pattern') && !getControl('numInt').hasError('required')">
+      *Ingresar unicamente números
+    </mat-error>
+  </mat-form-field
+  >
   <mat-form-field appearance="fill">
     <mat-label>Colonia</mat-label>
-    <input type="text" formControlName="colonia" matInput>
+    <input type="text" formControlName="colonia" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('colonia').hasError('pattern') && !getControl('colonia').hasError('required')">
+      *Campo Colonia no válido
+    </mat-error>
+    <mat-error *ngIf="getControl('colonia').hasError('required')">
+      *El campo Colonia es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>C.P.</mat-label>
-    <input type="text" formControlName="cp" matInput>
+    <input type="number" formControlName="cp" matInput autocomplete="off" placeholder="Ej. 80290">
+    <mat-error *ngIf="(getControl('cp').hasError('min') || getControl('cp').hasError('max')) && !getControl('cp').hasError('required') && !getControl('cp').hasError('pattern')">
+      *Debe contener unicamente 5 dígitos.
+    </mat-error>
+    <mat-error *ngIf="getControl('cp').hasError('pattern') && !getControl('cp').hasError('required')">
+      *Ingresar unicamente números
+    </mat-error>
+    <mat-error *ngIf="getControl('cp').hasError('required')">
+      *El campo C.P. es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Teléfono</mat-label>
-    <input type="text" formControlName="telefono" matInput>
+    <input type="text" formControlName="telefono" matInput autocomplete="off">
+    <mat-error *ngIf="(getControl('telefono').hasError('minlength') || getControl('telefono').hasError('maxlength')) && !getControl('telefono').hasError('pattern') && !getControl('telefono').hasError('required')">
+      *El campo Teléfono debe contener 10 dígitos.
+    </mat-error>
+    <mat-error *ngIf="getControl('telefono').hasError('pattern') && !getControl('telefono').hasError('required')">
+      *Ingresar unicamente números
+    </mat-error>
+    <mat-error *ngIf="getControl('telefono').hasError('required')">
+      *El campo Teléfono es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Gerente</mat-label>
-    <input type="text" formControlName="gerente" matInput>
+    <input type="text" formControlName="gerente" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('gerente').hasError('pattern') && !getControl('gerente').hasError('required')">
+      *Nombre no es válido
+    </mat-error>
+    <mat-error *ngIf="getControl('gerente').hasError('required')">
+      *El campo Gerente es obligatorio.
+    </mat-error>
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Encargado</mat-label>
-    <input type="text" formControlName="encargado" matInput>
+    <input type="text" formControlName="encargado" matInput autocomplete="off">
+    <mat-error *ngIf="getControl('encargado').hasError('pattern') && !getControl('encargado').hasError('required')">
+      *Nombre no es válido
+    </mat-error>
+    <mat-error *ngIf="getControl('encargado').hasError('required')">
+      *El campo Encargado es obligatorio.
+    </mat-error>
   </mat-form-field>
   <button type="submit" style="margin-bottom: 1em;" mat-raised-button color="primary">Enviar Información</button>
 </form>

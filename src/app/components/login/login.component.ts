@@ -53,4 +53,10 @@ export class LoginComponent implements OnInit {
     console.log(this.form)
   }
 
+  loginWithGoogle(){
+    this.data.loginGoogle().subscribe(res=>{
+      console.log(res);
+    })
+  }
+
 }

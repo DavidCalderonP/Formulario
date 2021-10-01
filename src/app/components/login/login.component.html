@@ -17,7 +17,7 @@
               <a href="assets/pcf.jpeg" style="text-align: right"><small>Olvidaste la contraseña?</small></a>
             </mat-card-content>
             <button mat-stroked-button color="primary" type="submit" class=" mb-3 btn-block">Entrar</button>
-            <button mat-stroked-button color="primary" type="button" class=" mb-3 btn-block"><mat-icon>gpp_good</mat-icon> Entrar con Google</button>
+            <button mat-stroked-button color="primary" type="button" (click)="loginWithGoogle()" class=" mb-3 btn-block"><mat-icon>gpp_good</mat-icon> Entrar con Google</button>
           </form>
           <a href="registrar">
             <small>Eres nuevo? Crea una cuenta.</small>
