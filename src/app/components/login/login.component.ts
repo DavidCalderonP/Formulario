@@ -54,9 +54,14 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(){
-    this.data.loginGoogle().subscribe(res=>{
-      console.log(res);
+    this.data.loginGoogle().toPromise()
+      .then(res=>{
+        console.log(res)
     })
+      .catch(err=>{
+        console.log(err)
+    })
+
   }
 
 }

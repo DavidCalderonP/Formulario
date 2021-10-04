@@ -2,22 +2,45 @@
   <mat-form-field appearance="fill">
     <mat-label>Nombre(s)</mat-label>
     <input type="text" formControlName="nombre" matInput>
-    <mat-error *ngIf="form.controls.nombre.errors">{{ errores('nombre') }}</mat-error>
+    <mat-error *ngIf="getControl('nombre').hasError('pattern') && !getControl('nombre').hasError('required')">
+      *El campo Nombre no es válido.
+    </mat-error>
+    <mat-error *ngIf="getControl('nombre').hasError('required')">
+      *El campo Nombre es obligatorio.
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Apellido Paterno</mat-label>
     <input type="text" formControlName="apellido_paterno" matInput>
-    <mat-error *ngIf="form.controls.apellido_paterno.errors">{{ errores('apellido_paterno') }}</mat-error>
+    <mat-error *ngIf="getControl('apellido_paterno').hasError('pattern') && !getControl('apellido_paterno').hasError('required')">
+      *El campo Apellido Paterno no es válido.
+    </mat-error>
+    <mat-error *ngIf="getControl('apellido_paterno').hasError('required')">
+      *El campo Apellido Paterno es obligatorio.
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Apellido Materno</mat-label>
     <input type="text" formControlName="apellido_materno" matInput>
-    <mat-error *ngIf="form.controls.apellido_materno.errors">{{ errores('apellido_materno') }}</mat-error>
+    <mat-error *ngIf="getControl('apellido_materno').hasError('pattern') && !getControl('apellido_materno').hasError('required')">
+      *El campo Apellido Materno no es válido.
+    </mat-error>
+    <mat-error *ngIf="getControl('apellido_materno').hasError('required')">
+      *El campo Apellido Materno es obligatorio.
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Teléfono</mat-label>
     <input type="text" formControlName="telefono" matInput>
-    <mat-error *ngIf="form.controls.telefono.errors">{{ errores('telefono') }}</mat-error>
+    <mat-error *ngIf="(getControl('telefono').hasError('minlength') || getControl('telefono').hasError('maxlength')) && !getControl('telefono').hasError('pattern') && !getControl('telefono').hasError('required')">
+      *El campo Teléfono debe contener solamente 10 caracteres.
+    </mat-error>
+    <mat-error *ngIf="getControl('telefono').hasError('pattern') && !getControl('telefono').hasError('required')">
+      *El campo Teléfono no es válido.
+    </mat-error>
+    <mat-error *ngIf="getControl('telefono').hasError('required')">
+      *El campo Teléfono es obligatorio.
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Sucursal</mat-label>
@@ -26,17 +49,32 @@
         {{ option.nombre }}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="form.controls.sucursal_id.errors">{{ errores('sucursal_id') }}</mat-error>
+    <mat-error *ngIf="getControl('sucursal_id').hasError('required')">
+      *El campo Sucursal es obligatorio.
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input type="text" formControlName="email" matInput>
-    <mat-error *ngIf="form.controls.email.errors">{{ errores('email') }}</mat-error>
+    <mat-error *ngIf="getControl('email').hasError('email') && !getControl('email').hasError('required')">
+      *El campo Email no es válido.
+    </mat-error>
+    <mat-error *ngIf="getControl('email').hasError('required')">
+      *El campo Email es obligatorio.
+    </mat-error>
   </mat-form-field>
-  <mat-form-field *ngIf="!this.dataUsuario" appearance="fill">
+  <mat-form-field appearance="fill">
     <mat-label>Contraseña</mat-label>
     <input type="password" formControlName="password" matInput>
-    <mat-error *ngIf="form.controls.password.errors">{{ errores('password') }}</mat-error>
+
+    <mat-error *ngIf="getControl('password').hasError('pattern') && !getControl('password').hasError('required')">
+      *El campo Contraseña debe tener al menos 6 caracteres y contener al menos una mayúscula, una minuscula, un número y un carácter especial.
+    </mat-error>
+    <mat-error *ngIf="getControl('password').hasError('required')">
+      *El campo Contraseña es obligatorio.
+    </mat-error>
+
   </mat-form-field>
+  <div *ngIf="this.dataUsuario" style="color: rgb(13,110,253)">Nota: Si no deseas actualizar la contraseña solo deja el espacio en blanco.</div>
   <button type="submit" style="margin-bottom: 1em;" mat-raised-button color="primary">Enviar Información</button>
 </form>

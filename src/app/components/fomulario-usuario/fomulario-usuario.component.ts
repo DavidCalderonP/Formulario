@@ -8,7 +8,7 @@ import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 interface SucursalesOptions {
-  id    : number,
+  id: number,
   nombre: string
 }
 
@@ -26,7 +26,7 @@ export class FomularioUsuarioComponent implements OnInit {
   @Input() dataUsuario: Usuario;
 
   constructor(private data: ApiService, private route: ActivatedRoute, private snack: MatSnackBar, private router: Router) {
-    this.data.getRegisterSucursales().subscribe((res: SucursalesOptions[])=>{
+    this.data.getRegisterSucursales().subscribe((res: SucursalesOptions[]) => {
       this.optionsSucursales = res;
       //console.log(res)
       console.log(this.optionsSucursales)
@@ -35,7 +35,7 @@ export class FomularioUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.url.subscribe(res=>console.log(res[0].path))
+    this.route.url.subscribe(res => console.log(res[0].path))
     this.form = new FormGroup({
       nombre: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['nombre_usuario'] || '' : '', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúñÑÁÉÍÓÚ ]*$')]),
       apellido_paterno: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['apellido_paterno'] || '' : '', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúñÑÁÉÍÓÚ ]*$')]),
@@ -43,47 +43,18 @@ export class FomularioUsuarioComponent implements OnInit {
       telefono: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['telefono_usuario'] || '' : '', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]),
       sucursal_id: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['sucursal_id'] || '' : '', [Validators.required]),
       email: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['email'] || '' : '', [Validators.required, Validators.email]),
-      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '',)
+      password: new FormControl(this.dataUsuario !== undefined ? this.dataUsuario['password'] || '' : '', this.dataUsuario ? [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.12345]).{8,}$')] : [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.12345]).{6,}$'), Validators.required])
     })
   }
 
-  errores(atributo: string){
-    //console.log(this.form.controls.nombre.errors)
-    //console.log(this.form.controls[atributo].errors)
-    let aux = this.form.controls[atributo].errors;
-    if(aux!==null){
-      if(aux.hasOwnProperty('required')){
-        return `El campo ${atributo} es obligatorio`;
-      }
-      if(aux.hasOwnProperty('pattern') && atributo==='telefono'){
-        return `El campo ${atributo} solo acepta números`;
-      }
-      if((aux.hasOwnProperty('minlength') || aux.hasOwnProperty('maxlength')) && atributo==='telefono'){
-        return `El campo ${atributo} debe tener 10 caracteres`;
-      }
-      if(aux.hasOwnProperty('pattern')){
-        return `El campo ${atributo} solo acepta letras mayúsculas y minusculas`;
-      }
-      if(aux.hasOwnProperty('minlength') && atributo==='password'){
-        return `La contraseña debe contener de 8 a 15 caracteres`;
-      }
-      if(aux.hasOwnProperty('maxlength') && atributo==='password'){
-        return `La contraseña debe contener de 8 a 15 caracteres`;
-      }
-      if(aux.hasOwnProperty('email')){
-        return `El campo ${atributo} debe contener un email válido`;
-      }
-
-    }
-    //if(this.form.controls[atributo].errors=='required'){
-    //  return "Requeridooooo"
-    //}
-    return ""
+  getControl(control: string): any {
+    return this.form.controls[control];
   }
+
   enviarFormulario() {
     console.log("Enviando formulario...")
     console.log(this.form)
-    if(this.form.invalid){
+    if (this.form.invalid) {
       console.log("Formulario inválido")
       return;
     }
@@ -92,7 +63,7 @@ export class FomularioUsuarioComponent implements OnInit {
 
     let aux = this.form.value;
     console.log(aux)
-    let newUsuarioWtihoutPass : Usuario = {
+    let newUsuarioWtihoutPass: Usuario = {
       apellido_paterno: aux['apellido_paterno'],
       apellido_materno: aux['apellido_materno'],
       email: aux['email'],
@@ -110,45 +81,53 @@ export class FomularioUsuarioComponent implements OnInit {
       password: this.form.value['password']
     }
 
-    if(this.fromLogin){
+    if (this.fromLogin) {
 
       this.data.addRegisterUser(newUsuarioWithPassword)
         .toPromise()
-        .then(()=>{
+        .then(() => {
           this.data.login(reg)
             .toPromise()
-            .then(res=>{
+            .then(res => {
               this.data.toLocalStorage(res)
               this.data.toLocalStorage(reg);
               this.router.navigateByUrl('sucursales');
               let ref = this.snack.open(`Bienvenido ${newUsuarioWithPassword.nombre} ${newUsuarioWithPassword.apellido_paterno}`, "Ok!")
-              setTimeout(()=>{
+              setTimeout(() => {
                 ref.dismiss();
-              },7500)
+              }, 7500)
             })
-            .catch(err=>{
+            .catch(err => {
               console.log(err)
               let ref = this.snack.open("Hubo un error al tratar de obtener el token")
-              setTimeout(()=>{
+              setTimeout(() => {
                 ref.dismiss();
-              },3500)
+              }, 3500)
             })
         })
-        .catch(err=>{
+        .catch(err => {
           console.log(err)
           let ref = this.snack.open("Hubo un error al tratar de obtener crear el usuario")
-          setTimeout(()=>{
+          setTimeout(() => {
             ref.dismiss();
-          },3500)
+          }, 3500)
         })
       return;
     }
-    if(this.dataUsuario) {
-      this.data.updateUsuario(this.dataUsuario,aux['password']==="" ? newUsuarioWtihoutPass : newUsuarioWithPassword).toPromise().then(res => {
+    if (this.dataUsuario) {
+      this.data.updateUsuario(this.dataUsuario, aux['password'] === "" ? newUsuarioWtihoutPass : newUsuarioWithPassword).toPromise().then(res => {
         console.log(res);
         this.dialogRef.close();
+        let ref = this.snack.open("El suuario ha sido actualizado exitosamente!", "Ok");
+        setTimeout(() => {
+          ref.dismiss();
+        }, 4500);
 
       }).catch(err => {
+        let ref = this.snack.open("Hubo un problema al actualizar el usuario", "Ok");
+        setTimeout(() => {
+          ref.dismiss();
+        }, 4500);
         console.log(err.status)
         console.log(err)
       })
@@ -158,9 +137,16 @@ export class FomularioUsuarioComponent implements OnInit {
         console.log(this.form)
         this.form.reset();
         this.form.updateValueAndValidity();
+        let ref = this.snack.open("El suuario ha sido creado exitosamente!", "Ok");
+        setTimeout(() => {
+          ref.dismiss();
+        }, 4500);
       }).catch(err => {
         console.log("imprimiendo la respuesta del error al crear", err.status)
-        this.snack.open("Error. Por favor asegurate de que la sucursal asignada existe!","Ok!")
+        let ref = this.snack.open("Hubo un problema al crear el usuario!", "Ok!")
+        setTimeout(() => {
+          ref.dismiss();
+        }, 4500);
         console.log(err)
       })
     }

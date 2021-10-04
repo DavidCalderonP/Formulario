@@ -10,6 +10,8 @@ import {Cliente} from "../models/cliente";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {ajaxGetJSON} from "rxjs/internal-compatibility";
+import {JsonPipe} from "@angular/common";
 
 
 @Injectable({
@@ -161,17 +163,72 @@ export class ApiService {
     return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente, { headers });
   }
 
-  loginGoogle(){
-    //let headers = {
-    //  'Access-Control-Allow-Origin': 'http://localhost:4200'
-    //}
-    return this.http.get(`${environment.API.loginGoogle}`);
+   loginGoogle(){
+
+    return this.http.get(environment.API.loginGoogle).pipe(
+      catchError(err=>{
+        console.log(err)
+        return err;
+      })
+    )
+
+     /*
+     return fetch(environment.API.loginGoogle).then(res=>{
+       return fetch(res.url).then(data=>{
+         console.log(data)
+       })
+
+     })
+*/
+     /*
+     let xhr = new XMLHttpRequest();
+     xhr.open("GET", environment.API.loginGoogle, true);
+     xhr.onreadystatechange = function () {
+       if (xhr.readyState === 4 && xhr.status === 200) {
+         var respuesta = JSON.parse(xhr.responseText);
+         console.log(respuesta);
+       }
+     }
+     console.log(xhr)
+     */
+/*
+Error token unexpected
+     var Httpreq = new XMLHttpRequest(); // a new request
+     Httpreq.open("GET",environment.API.loginGoogle,true);
+     Httpreq.send(null);
+     console.log(Httpreq)
+     this.http.get(Httpreq.responseURL).subscribe((res:any)=>{
+       res = res.replace(/^\uFEFF/gm, "");
+       console.log(res)
+     })
+     return Httpreq.responseText;
+*/
+     /*
+     Error en el response text
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', environment.API.loginGoogle, true);
+      xhr.responseType = 'json';
+      xhr.send();
+      console.log(xhr)
+ */
+    /*
+    Error en el CORS
+    return fetch(environment.API.loginGoogle).then(res=>{
+      console.log(res)
+      fetch(res.url, {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        console.log(response.json())
+        return response.json();
+      })
+    })
+     */
   }
 
   login(usuario: Usuario | { email: string, password: string }) {
-    //let headers = {
-    //  headers: new HttpHeaders().set('Content-Type', 'application/form-data')
-    //}
     return this.http.post(environment.API.loginUrl, usuario).pipe(
       catchError(err => {
         console.log(err)

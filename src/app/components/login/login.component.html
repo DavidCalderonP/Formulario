@@ -17,8 +17,24 @@
               <a href="assets/pcf.jpeg" style="text-align: right"><small>Olvidaste la contraseña?</small></a>
             </mat-card-content>
             <button mat-stroked-button color="primary" type="submit" class=" mb-3 btn-block">Entrar</button>
-            <button mat-stroked-button color="primary" type="button" (click)="loginWithGoogle()" class=" mb-3 btn-block"><mat-icon>gpp_good</mat-icon> Entrar con Google</button>
+            <!--<button mat-stroked-button color="primary" type="button" (click)="loginWithGoogle()" class=" mb-3 btn-block"><mat-icon>gpp_good</mat-icon> Entrar con Google</button>-->
+            <!--<a href="https://8175-187-149-139-31.ngrok.io/api/loginGoogle">LOGIN</a>-->
           </form>
+          <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+          <script>
+            function onSignIn(googleUser) {
+              var profile = googleUser.getBasicProfile();
+              console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+              console.log('Full Name: ' + profile.getName());
+              console.log('Given Name: ' + profile.getGivenName());
+              console.log('Family Name: ' + profile.getFamilyName());
+              console.log("Image URL: " + profile.getImageUrl());
+              console.log("Email: " + profile.getEmail());
+              // The ID token you need to pass to your backend:
+              var id_token = googleUser.getAuthResponse().id_token;
+              console.log("ID Token: " + id_token);
+            }
+          </script>
           <a href="registrar">
             <small>Eres nuevo? Crea una cuenta.</small>
           </a>
