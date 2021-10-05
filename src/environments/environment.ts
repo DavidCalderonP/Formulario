@@ -13,7 +13,7 @@ export const environment = {
     loginUrl: "http://10.112.32.145:8000/api/login/",
     logoutUrl: "http://10.112.32.145:8000/api/logout/",
     validarToken: "http://10.112.32.145:8000/api/validarToken/",
-    loginGoogle: "https://8175-187-149-139-31.ngrok.io/api/loginGoogle",
+    loginGoogle: "http://10.112.32.145:8000/api/longinCuentaGoogle",
     me: "http://10.112.32.145:8000/api/me/"
   }
 };

@@ -163,22 +163,26 @@ export class ApiService {
     return this.http.put(`${environment.API.clientesUrl}${cliente.id}`, newCliente, { headers });
   }
 
-   loginGoogle(){
+  loginGoogle(googleKey:string){
+    let jsonToken = {
+      'token': googleKey
+    }
+    return this.http.post(environment.API.loginGoogle, jsonToken);
+  }
 
-    return this.http.get(environment.API.loginGoogle).pipe(
-      catchError(err=>{
-        console.log(err)
-        return err;
-      })
-    )
+  /*
 
-     /*
-     return fetch(environment.API.loginGoogle).then(res=>{
-       return fetch(res.url).then(data=>{
-         console.log(data)
-       })
+ console.log("Servicio")
 
-     })
+
+
+  /*
+  return fetonment.API.loginGoogle).then(res=>{
+    return fetch(res.url).then(data=>{
+      console.log(data)
+    })
+
+  })
 */
      /*
      let xhr = new XMLHttpRequest();
@@ -226,7 +230,7 @@ Error token unexpected
       })
     })
      */
-  }
+  //}
 
   login(usuario: Usuario | { email: string, password: string }) {
     return this.http.post(environment.API.loginUrl, usuario).pipe(

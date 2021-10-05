@@ -6,11 +6,13 @@ import {ClienteComponent} from "./components/cliente/cliente.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RegistrarComponent} from "./components/registrar/registrar.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {FacebookComponent} from "./components/facebook/facebook.component";
 
 const routes: Routes = [
   { path: 'sucursales', component: SucursalComponent, canActivate: [AuthGuard] },
   { path: 'usuarios', component: UsuarioComponent, canActivate: [AuthGuard] },
   { path: 'clientes', component: ClienteComponent, canActivate: [AuthGuard] },
+  { path: 'loginFB', component: FacebookComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registrar', component: RegistrarComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'sucursales' }

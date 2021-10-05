@@ -7,7 +7,6 @@ import {Sucursal} from "../../models/sucursal";
 import {ApiService} from "../../services/api.service";
 import {MatDialog} from "@angular/material/dialog";
 import {SucursalDialogComponent} from "../sucursal-dialog/sucursal-dialog.component";
-import {Usuario} from "../../models/usuario";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -29,27 +28,6 @@ export class SucursalComponent {
     this.dataSource = new MatTableDataSource();
     this.sort = new MatSort();
     console.log(this.sort)
-    /*
-    this.data.getToken({
-        email: 'david@gmail.com',
-        password: '123456'
-      }
-    ).subscribe(res => {
-      console.log(res)
-    })
-
-   this.data.saveUsuario({
-     apellido_materno: 'Peña',
-     apellido_paterno: 'Calderon',
-     email: 'david@gmail.com',
-     nombre: 'David Alonso',
-     password: '123456',
-     sucursal_id: 1,
-     telefono: '6677196055'
-   }).subscribe(res=>{
-     console.log(res)
-   })
-    */
   }
 
   getSucursales() {
