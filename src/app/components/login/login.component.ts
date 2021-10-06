@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ApiService} from "../../services/api.service";
 import {Router} from "@angular/router";
@@ -11,7 +11,7 @@ import {GoogleService} from "../../services/google.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   user : gapi.auth2.GoogleUser;
@@ -25,38 +25,38 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.google.getObservable().subscribe((res:any)=>{
-      const token = res['$b']['access_token'];
-      console.log("En el login ", res['$b']['access_token'])
-      this.data.loginGoogle(token).toPromise().then(res=>{
-       // let ref = this.snack.open("Inicio con Google exitoso, redireccionando...","Ok");
-       // setTimeout(()=>{
-       //   ref.dismiss();
-       // },4000)
-        console.log(res)
-        this.data.toLocalStorage(res);
-        this.router.navigateByUrl('sucursales').then(()=>{
-          this.data.me().subscribe((user:any)=>{
-            let ref = this.snack.open(`Bienvenido ${user.nombre}`,"Ok");
-            setTimeout(()=>{
-              ref.dismiss();
-            },800)
-          })
-        });
-      }).catch(err=>{
-        console.log(err)
-        let ref = this.snack.open("Hubo un error al inciar sesión con Google", "Ok");
-        setTimeout(()=>{
-          ref.dismiss();
-        },4000)
-      });
-      this.user = res;
-      //this.ref.detectChanges();
-    })
+
+  }
+
+  ngOnDestroy() {
+
   }
 
   signInWithGoogle(){
     this.google.signIn()
+    this.google.getObservable().subscribe((res:any)=>{
+      const token = res['$b']['access_token'];
+      console.log("En el login ", res['$b']['access_token'])
+      this.data.loginGoogle(token).toPromise().then( (res)=>{
+        // let ref = this.snack.open("Inicio con Google exitoso, redireccionando...","Ok");
+        // setTimeout(()=>{
+        //   ref.dismiss();
+        // },4000)
+        console.log(res)
+        this.data.toLocalStorage(res);
+        this.router.navigateByUrl('sucursales', { skipLocationChange: false }).then(() => {
+          this.router.navigate(['sucursales']);
+        });
+      }).catch(err=>{
+        console.log(err)
+      });
+     // let ref = this.snack.open(`Sesión iniciada correctamente`,"Ok");
+     // setTimeout(()=>{
+     //   ref.dismiss();
+     // },800)
+      this.user = res;
+      this.ref.detectChanges();
+    })
   }
 
 

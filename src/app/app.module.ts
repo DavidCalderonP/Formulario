@@ -38,8 +38,6 @@ import { LoginComponent } from './components/login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import { RegistrarComponent } from './components/registrar/registrar.component';
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
-import {FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "angularx-social-login";
-import { FacebookComponent } from './components/facebook/facebook.component';
 
 @NgModule({
   declarations: [
@@ -56,8 +54,7 @@ import { FacebookComponent } from './components/facebook/facebook.component';
     FormularioClienteComponent,
     ClienteDialogComponent,
     LoginComponent,
-    RegistrarComponent,
-    FacebookComponent
+    RegistrarComponent
   ],
     imports: [
         BrowserModule,
@@ -83,26 +80,11 @@ import { FacebookComponent } from './components/facebook/facebook.component';
         MatCheckboxModule,
         FormsModule,
         MatSnackBarModule,
-        MatCardModule,
-        SocialLoginModule
+        MatCardModule
     ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    JwtHelperService,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(
-              '308075937748392'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    }
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })

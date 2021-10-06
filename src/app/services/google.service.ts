@@ -33,7 +33,6 @@ export class GoogleService {
       })
   }
 
-
   public signOut(){
     this.auht2.signOut()
       .then((user:gapi.auth2.GoogleUser)=>{

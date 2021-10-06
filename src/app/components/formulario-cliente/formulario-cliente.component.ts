@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../../services/api.service";
 import {ActivatedRoute} from "@angular/router";
@@ -47,16 +47,23 @@ export class FormularioClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      denominacion: new FormControl(this.dataCliente !== undefined ? this.dataCliente['denominacion'] || '' : ''),
-      asesor_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['asesor_id'] || '' : ''),
-      sucursal_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['sucursal_id'] || '' : ''),
-      requiere_factura: new FormControl(this.dataCliente !== undefined ? (""+this.dataCliente['requiere_factura']) || '' : ''),
-      email: new FormControl(this.dataCliente !== undefined ? this.dataCliente['email'] || '' : '')
+      denominacion: new FormControl(this.dataCliente !== undefined ? this.dataCliente['denominacion'] || '' : '', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúñÑÁÉÍÓÚ ]*$')]),
+      asesor_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['asesor_id'] || '' : '', [Validators.required]),
+      sucursal_id: new FormControl(this.dataCliente !== undefined ? this.dataCliente['sucursal_id'] || '' : '', [Validators.required]),
+      requiere_factura: new FormControl(this.dataCliente !== undefined ? (""+this.dataCliente['requiere_factura']) || '' : '', [Validators.required]),
+      email: new FormControl(this.dataCliente !== undefined ? this.dataCliente['email'] || '' : '', [Validators.required, Validators.email])
   })
 
   }
 
+  getControl(control: string): any {
+    return this.form.controls[control];
+  }
+
   enviarFormulario() {
+
+    if(this.form.invalid)
+      return;
 
     console.log(this.form)
     let aux: Cliente = this.form.value;
